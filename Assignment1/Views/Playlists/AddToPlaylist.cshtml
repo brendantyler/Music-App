@@ -1,0 +1,16 @@
+﻿@using Assignment1.Models.ViewModels;
+@model AddSongToPlaylistViewModel
+
+@if(@Model.Playlists.Count == 0) 
+{   
+    <a asp-action="Create">Create a Playlist Here</a>
+
+} else {
+    <h3>Add to playlist</h3>
+    <h4>Add <strong>'@ViewBag.songName'</strong> to which playlist?</h4>
+    <form method="post" asp-action="AddToPlaylist">
+        <input type="hidden" asp-for="@Model.SongId">
+        <select asp-for="PlaylistId" asp-items="@Model.Playlists"></select>
+        <button type="submit">Add</button>
+    </form>
+}

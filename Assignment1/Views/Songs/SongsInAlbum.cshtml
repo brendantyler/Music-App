@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Assignment1.Models.Songs>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>
+    @ViewBag.AlbumTitle
+</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration) seconds
+                </td>
+                <td>
+                    | <a asp-controller="Playlists" asp-action="AddToPlaylist" asp-route-id="@item.Id">Add to Playlist</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
