@@ -4,7 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>
+   @ViewBag.playlistName
+</h1>
+<h4> Duration: @ViewBag.PlaylistDuration</h4>
 
 <p>
     <a asp-action="Create">Create New</a>

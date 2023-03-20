@@ -34,10 +34,22 @@ namespace Assignment1.Controllers
                 return NotFound();
             }
 
+            string playlistTitle = _context.Playlists.First(p => p.Id == id).Name;
+            ViewBag.playlistName = playlistTitle;
+
             var playlistSong = _context.PlaylistSongs
                 .Include(p => p.Playlist)
                 .Include(p => p.Song)
                 .Where(m => m.PlaylistId == id);
+
+            int duration = 0;
+            foreach (var item in playlistSong)
+            {
+                duration += item.Song.Duration;
+            }
+
+            TimeSpan seconds = TimeSpan.FromSeconds(duration);
+            ViewBag.PlaylistDuration = seconds.ToString();
 
             if (playlistSong == null)
             {

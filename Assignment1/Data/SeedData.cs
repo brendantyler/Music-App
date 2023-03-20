@@ -53,30 +53,47 @@ namespace Assignment1.Data
             Songs song20 = new Songs("Nuestra Cancion", 260, Album6);
 
             //Initialize SongArtist
-            SongArtist songArtist1 = new SongArtist(Artist1, song1);
-            SongArtist songArtist2 = new SongArtist(Artist1, song2);
-            SongArtist songArtist3 = new SongArtist(Artist1, song3);
-            SongArtist songArtist4 = new SongArtist(Artist1, song4);
-            SongArtist songArtist5 = new SongArtist(Artist1, song5);
-            SongArtist songArtist6 = new SongArtist(Artist1, song6);
-            SongArtist songArtist7 = new SongArtist(Artist1, song7);
-            SongArtist songArtist8 = new SongArtist(Artist1, song8);
-            SongArtist songArtist9 = new SongArtist(Artist1, song9);
-            SongArtist songArtist10 = new SongArtist(Artist1, song10);
+            SongArtist songArtist1 = new SongArtist(Artist1, song1, "Lead");
+            SongArtist songArtist2 = new SongArtist(Artist1, song2, "Lead");
+            SongArtist songArtist3 = new SongArtist(Artist1, song3, "Lead");
+            SongArtist songArtist4 = new SongArtist(Artist1, song4, "Lead");
+            SongArtist songArtist5 = new SongArtist(Artist1, song5, "Lead");
+            SongArtist songArtist6 = new SongArtist(Artist1, song6, "Lead");
+            SongArtist songArtist7 = new SongArtist(Artist1, song7, "Lead");
+            SongArtist songArtist8 = new SongArtist(Artist1, song8, "Lead");
+            SongArtist songArtist9 = new SongArtist(Artist1, song9, "Lead");
+            SongArtist songArtist10 = new SongArtist(Artist1, song10, "Lead");
 
-            SongArtist songArtist11 = new SongArtist(Artist2, song11);
-            SongArtist songArtist12 = new SongArtist(Artist2, song12);
-            SongArtist songArtist13 = new SongArtist(Artist2, song13);
-            SongArtist songArtist14 = new SongArtist(Artist2, song14);
-            SongArtist songArtist15 = new SongArtist(Artist2, song15);
-            SongArtist songArtist16 = new SongArtist(Artist2, song16);
-            SongArtist songArtist17 = new SongArtist(Artist2, song17);
+            SongArtist songArtist11 = new SongArtist(Artist2, song11, "Lead");
+            SongArtist songArtist12 = new SongArtist(Artist2, song12, "Lead");
+            SongArtist songArtist13 = new SongArtist(Artist2, song13, "Lead");
+            SongArtist songArtist14 = new SongArtist(Artist2, song14, "Lead");
+            SongArtist songArtist15 = new SongArtist(Artist2, song15, "Lead");
+            SongArtist songArtist16 = new SongArtist(Artist2, song16, "Lead");
+            SongArtist songArtist17 = new SongArtist(Artist2, song17, "Lead");
 
-            SongArtist songArtist18 = new SongArtist(Artist3, song18);
-            SongArtist songArtist19 = new SongArtist(Artist3, song19);
+            SongArtist songArtist18 = new SongArtist(Artist3, song18, "Lead");
+            SongArtist songArtist19 = new SongArtist(Artist3, song19, "Lead");
 
-            SongArtist songArtist20 = new SongArtist(Artist4, song20);
-            SongArtist songArtist21 = new SongArtist(Artist5, song20);
+            SongArtist songArtist20 = new SongArtist(Artist4, song20, "Lead");
+            SongArtist songArtist21 = new SongArtist(Artist5, song20, "Feature");
+
+            //Instantiate Playlist
+            Playlist playlist1 = new Playlist("PaRappa the Rapper");
+            Playlist playlist2 = new Playlist("SlowJams");
+            Playlist playlist3 = new Playlist("Sun's out");
+
+            PlaylistSong playSong1 = new PlaylistSong(song1, playlist1, DateTime.Now);
+            PlaylistSong playSong2 = new PlaylistSong(song2, playlist1, DateTime.Now);
+            PlaylistSong playSong3 = new PlaylistSong(song3, playlist1, DateTime.Now);
+
+            PlaylistSong playSong4 = new PlaylistSong(song10, playlist2, DateTime.Now);
+            PlaylistSong playSong5 = new PlaylistSong(song11, playlist2, DateTime.Now);
+            PlaylistSong playSong6 = new PlaylistSong(song12, playlist2, DateTime.Now);
+
+            PlaylistSong playSong7 = new PlaylistSong(song20, playlist3, DateTime.Now);
+            PlaylistSong playSong8 = new PlaylistSong(song14, playlist3, DateTime.Now);
+            PlaylistSong playSong9 = new PlaylistSong(song13, playlist3, DateTime.Now);
 
 
             if (!context.Artists.Any())
@@ -178,6 +195,29 @@ namespace Assignment1.Data
                 context.SaveChanges();
             }
 
+            if (!context.Playlists.Any())
+            {
+                context.Playlists.Add(playlist1);
+                context.Playlists.Add(playlist2);
+                context.Playlists.Add(playlist3);
+                context.SaveChanges();
+
+            }
+
+            if (!context.PlaylistSongs.Any())
+            {
+                context.PlaylistSongs.Add(playSong1);
+                context.PlaylistSongs.Add(playSong2);
+                context.PlaylistSongs.Add(playSong3);
+                context.PlaylistSongs.Add(playSong4);
+                context.PlaylistSongs.Add(playSong5);
+                context.PlaylistSongs.Add(playSong6);
+                context.PlaylistSongs.Add(playSong7);
+                context.PlaylistSongs.Add(playSong8);
+                context.PlaylistSongs.Add(playSong9);
+                context.SaveChanges();
+
+            }
 
             await context.SaveChangesAsync();
         }

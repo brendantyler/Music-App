@@ -8,13 +8,16 @@
         public int SongId { get; set; }
         public Songs? Song { get; set; }
 
+        public string? Role { get; set; }
+
         public SongArtist() { }
-        public SongArtist(Artist artist, Songs song)
+        public SongArtist(Artist artist, Songs song, string role)
         {
             Artist = artist;
             ArtistId = artist.Id;
             Song = song;
             SongId = song.Id;
+            Role = role;
         }
 
     }

@@ -11,15 +11,14 @@
 
         public PlaylistSong () { }
 
-        public PlaylistSong (Songs song, Playlist playlist)
+        public PlaylistSong (Songs song, Playlist playlist, DateTime date)
         { 
             Song = song;
             SongId = song.Id;
 
             Playlist = playlist;
             PlaylistId = playlist.Id;
-
-            TimeAdded = DateTime.UtcNow;
+            TimeAdded = date;
         }
     }
 }
