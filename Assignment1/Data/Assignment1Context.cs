@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Assignment1.Models;
+using Microsoft.Build.ObjectModelRemoting;
 
 namespace Assignment1.Data
 {
@@ -21,5 +22,10 @@ namespace Assignment1.Data
         public DbSet<Assignment1.Models.Playlist> Playlists { get; set; } = default!;
         public DbSet<Assignment1.Models.PlaylistSong> PlaylistSongs { get; set; } = default!;
 
+
+        //Add Podcasts
+        public DbSet<Podcast> Podcast { get; set; } = default!;
+        public DbSet<Episodes> Episodes { get; set;} = default!;
+        public DbSet<PodcastListenerLists> PodcastListenerLists { get; set; } = default!;
     }
 }
