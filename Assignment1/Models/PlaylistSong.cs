@@ -1,12 +1,20 @@
-﻿namespace Assignment1.Models
+﻿using Microsoft.Build.Framework;
+
+namespace Assignment1.Models
 {
     public class PlaylistSong
     {
         public int Id { get; set; }
         public int SongId { get; set; }
+
+        [Required]
         public Songs? Song { get; set; }
         public int PlaylistId { get; set; }
+
+        [Required]
         public Playlist? Playlist { get; set; }
+
+        [Required]
         public DateTime TimeAdded { get; set; }
 
         public PlaylistSong () { }
