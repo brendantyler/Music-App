@@ -49,7 +49,7 @@ namespace Assignment1.Controllers
                 return NotFound();
             }
 
-            ViewBag.AlbumTitle = _context.Albums.FirstOrDefault(a => a.Id == id).Title.ToString();
+            ViewBag.AlbumTitle = _context.Albums.FirstOrDefault(a => a.Id == id).Name.ToString();
 
             var songs = _context.Songs.Where(m => m.Albums.Id == id).ToList();
 

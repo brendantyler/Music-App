@@ -4,6 +4,7 @@ using Assignment1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment1.Migrations
 {
     [DbContext(typeof(Assignment1Context))]
-    partial class Assignment1ContextModelSnapshot : ModelSnapshot
+    [Migration("20230323012206_ReformatPodcasts")]
+    partial class ReformatPodcasts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,10 @@ namespace Assignment1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.HasKey("Id");
 
@@ -50,30 +53,12 @@ namespace Assignment1.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Artists");
-                });
-
-            modelBuilder.Entity("Assignment1.Models.ListenerLists", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ListenerLists");
                 });
 
             modelBuilder.Entity("Assignment1.Models.Playlist", b =>
@@ -84,14 +69,22 @@ namespace Assignment1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Playlists");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Playlist");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Assignment1.Models.PlaylistSong", b =>
@@ -128,14 +121,10 @@ namespace Assignment1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -229,7 +218,14 @@ namespace Assignment1.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Assignment1.Models.Episodes", b =>
+            modelBuilder.Entity("Assignment1.Models.ListenerLists", b =>
+                {
+                    b.HasBaseType("Assignment1.Models.Playlist");
+
+                    b.HasDiscriminator().HasValue("ListenerLists");
+                });
+
+            modelBuilder.Entity("Assignment1.Models.Songs+Episodes", b =>
                 {
                     b.HasBaseType("Assignment1.Models.Songs");
 
@@ -317,14 +313,14 @@ namespace Assignment1.Migrations
                     b.Navigation("Albums");
                 });
 
-            modelBuilder.Entity("Assignment1.Models.Episodes", b =>
+            modelBuilder.Entity("Assignment1.Models.Songs+Episodes", b =>
                 {
                     b.HasOne("Assignment1.Models.Artist", "GuestArtist")
                         .WithMany()
                         .HasForeignKey("GuestArtistId");
 
                     b.HasOne("Assignment1.Models.Podcast", "Podcast")
-                        .WithMany()
+                        .WithMany("Episodes")
                         .HasForeignKey("PodcastId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -347,6 +343,11 @@ namespace Assignment1.Migrations
             modelBuilder.Entity("Assignment1.Models.Playlist", b =>
                 {
                     b.Navigation("PlaylistSong");
+                });
+
+            modelBuilder.Entity("Assignment1.Models.Podcast", b =>
+                {
+                    b.Navigation("Episodes");
                 });
 
             modelBuilder.Entity("Assignment1.Models.Songs", b =>
