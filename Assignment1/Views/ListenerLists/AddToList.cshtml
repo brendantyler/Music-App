@@ -1,0 +1,16 @@
+﻿@using Assignment1.Models.ViewModels;
+@model PodcastToListViewModel
+
+@if(@Model.ListenerListsColl.Count == 0) 
+{   
+    <a asp-action="Create">Create a Playlist Here</a>
+
+} else {
+    <h3>Add to playlist</h3>
+    <h4>Add <strong>'@ViewBag.songName'</strong> to which playlist?</h4>
+    <form method="post" asp-action="AddToList">
+        <input type="hidden" asp-for="@Model.Podcast">
+        <select asp-for="ListenerListsId" asp-items="@Model.ListenerListsColl"></select>
+        <button type="submit">Add</button>
+    </form>
+}

@@ -18,9 +18,10 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AirDate)
-                @Html.ActionLink( (string) ascOrDesc , "Details", new { sortOrder = ViewBag.DateSortParm})
             </th>
-            <th></th>
+            <th>
+                Sort Date @Html.ActionLink( (string) ascOrDesc , "Details", new { sortOrder = ViewBag.DateSortParm})
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -38,6 +39,7 @@
 
                 </td>
                 <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }
