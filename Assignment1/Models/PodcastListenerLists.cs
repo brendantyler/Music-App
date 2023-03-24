@@ -13,6 +13,8 @@ namespace Assignment1.Models
 
         [Required]
         public ListenerLists? ListenerList { get; set; }
+
+
         public DateTime TimeAdded { get; set; }
 
         public PodcastListenerLists() { }

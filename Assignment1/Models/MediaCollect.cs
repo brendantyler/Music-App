@@ -42,14 +42,18 @@ namespace Assignment1.Models
             Name = name;
         }
     }
+
     public class Podcast : MediaCollect
     {
-        public string Description { get; set; }
-        HashSet<Episodes> Episodes { get; set; } = new HashSet<Episodes>();
-        public Podcast(string name, string desc)
+        public HashSet<PodcastListenerLists> PodcastListenerLists = new HashSet<PodcastListenerLists>();
+
+        public HashSet<PodcastAuth> PodcastAuth { get; set; } = new HashSet<PodcastAuth>();
+        public HashSet<Episodes> Episodes { get; set; } = new HashSet<Episodes> { };
+
+        public HashSet<Artist> Cast { get; set; } = new HashSet<Artist> { };
+        public Podcast(string name)
         {
             Name = name;
-            Description = desc;
         }
 
         public Podcast() { }

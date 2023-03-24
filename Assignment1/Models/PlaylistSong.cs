@@ -1,4 +1,4 @@
-﻿using Microsoft.Build.Framework;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Assignment1.Models
 {
@@ -15,6 +15,7 @@ namespace Assignment1.Models
         public Playlist? Playlist { get; set; }
 
         [Required]
+        [Display(Name= "Time Added")]
         public DateTime TimeAdded { get; set; }
 
         public PlaylistSong () { }

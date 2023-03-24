@@ -4,6 +4,7 @@ using Assignment1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment1.Migrations
 {
     [DbContext(typeof(Assignment1Context))]
-    partial class Assignment1ContextModelSnapshot : ModelSnapshot
+    [Migration("20230323072959_CreateAndMove-SongsAndEpisodes")]
+    partial class CreateAndMoveSongsAndEpisodes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,12 +56,7 @@ namespace Assignment1.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int?>("PodcastId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PodcastId");
 
                     b.ToTable("Artists");
                 });
@@ -75,6 +73,7 @@ namespace Assignment1.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Duration")
+                        .HasMaxLength(550800)
                         .HasColumnType("int");
 
                     b.Property<int?>("GuestArtistId")
@@ -88,8 +87,8 @@ namespace Assignment1.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -170,6 +169,10 @@ namespace Assignment1.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -178,29 +181,6 @@ namespace Assignment1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Podcast");
-                });
-
-            modelBuilder.Entity("Assignment1.Models.PodcastAuth", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ArtistId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PodcastId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArtistId");
-
-                    b.HasIndex("PodcastId");
-
-                    b.ToTable("PodcastAuth");
                 });
 
             modelBuilder.Entity("Assignment1.Models.PodcastListenerLists", b =>
@@ -241,9 +221,7 @@ namespace Assignment1.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SongId")
                         .HasColumnType("int");
@@ -269,6 +247,7 @@ namespace Assignment1.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Duration")
+                        .HasMaxLength(550800)
                         .HasColumnType("int");
 
                     b.Property<int>("MediaCollectId")
@@ -276,21 +255,14 @@ namespace Assignment1.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AlbumsId");
 
                     b.ToTable("Songs");
-                });
-
-            modelBuilder.Entity("Assignment1.Models.Artist", b =>
-                {
-                    b.HasOne("Assignment1.Models.Podcast", null)
-                        .WithMany("Cast")
-                        .HasForeignKey("PodcastId");
                 });
 
             modelBuilder.Entity("Assignment1.Models.Episodes", b =>
@@ -300,7 +272,7 @@ namespace Assignment1.Migrations
                         .HasForeignKey("GuestArtistId");
 
                     b.HasOne("Assignment1.Models.Podcast", "Podcast")
-                        .WithMany("Episodes")
+                        .WithMany()
                         .HasForeignKey("PodcastId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -327,25 +299,6 @@ namespace Assignment1.Migrations
                     b.Navigation("Playlist");
 
                     b.Navigation("Song");
-                });
-
-            modelBuilder.Entity("Assignment1.Models.PodcastAuth", b =>
-                {
-                    b.HasOne("Assignment1.Models.Artist", "Artist")
-                        .WithMany("PodcastAuths")
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Assignment1.Models.Podcast", "Podcast")
-                        .WithMany("PodcastAuth")
-                        .HasForeignKey("PodcastId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Artist");
-
-                    b.Navigation("Podcast");
                 });
 
             modelBuilder.Entity("Assignment1.Models.PodcastListenerLists", b =>
@@ -404,23 +357,12 @@ namespace Assignment1.Migrations
 
             modelBuilder.Entity("Assignment1.Models.Artist", b =>
                 {
-                    b.Navigation("PodcastAuths");
-
                     b.Navigation("SongArtists");
                 });
 
             modelBuilder.Entity("Assignment1.Models.Playlist", b =>
                 {
                     b.Navigation("PlaylistSong");
-                });
-
-            modelBuilder.Entity("Assignment1.Models.Podcast", b =>
-                {
-                    b.Navigation("Cast");
-
-                    b.Navigation("Episodes");
-
-                    b.Navigation("PodcastAuth");
                 });
 
             modelBuilder.Entity("Assignment1.Models.Songs", b =>

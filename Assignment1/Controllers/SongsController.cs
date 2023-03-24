@@ -22,7 +22,9 @@ namespace Assignment1.Controllers
         // GET: Songs
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Songs.ToListAsync());
+              return _context.Songs != null ?
+                View(await _context.Songs.ToListAsync()) :
+            Problem("Entity set 'Assignment1_Assignment1Context.Songs' is null.");
         }
 
         public async Task<IActionResult> Details(int? id)

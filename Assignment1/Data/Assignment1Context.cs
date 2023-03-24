@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Assignment1.Models;
 using Microsoft.Build.ObjectModelRemoting;
+using System.Reflection.Metadata;
 
 namespace Assignment1.Data
 {
@@ -26,6 +27,7 @@ namespace Assignment1.Data
         //Add Podcasts
         public DbSet<Podcast> Podcast { get; set; } = default!;
         public DbSet<Episodes> Episodes { get; set;} = default!;
+        public DbSet<ListenerLists> ListenerLists { get; set; } = default!;
         public DbSet<PodcastListenerLists> PodcastListenerLists { get; set; } = default!;
     }
 }

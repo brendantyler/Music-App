@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Assignment1.Models.Episodes>
+
+@{
+    ViewData["Title"] = "Episodes";
+    string ascOrDesc = ViewBag.AscOrDesc;
+}
+
+<h1>@ViewBag.PodcastTitle</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AirDate)
+                @Html.ActionLink( (string) ascOrDesc , "Details", new { sortOrder = ViewBag.DateSortParm})
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.Raw(TimeSpan.FromSeconds(item.Duration))
+                </td>
+                <td>
+                    @Html.Raw(item.AirDate.ToString("dd/MM/yyyy"))
+
+                </td>
+                <td>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -43,9 +43,13 @@ namespace Assignment1.Controllers
                 .Where(m => m.PlaylistId == id);
 
             int duration = 0;
-            foreach (var item in playlistSong)
+
+            if (playlistSong.Any())
             {
-                duration += item.Song.Duration;
+                foreach (var item in playlistSong)
+                {
+                    duration += item.Song.Duration;
+                }
             }
 
             TimeSpan seconds = TimeSpan.FromSeconds(duration);

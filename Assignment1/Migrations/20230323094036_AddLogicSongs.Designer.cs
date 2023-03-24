@@ -4,6 +4,7 @@ using Assignment1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment1.Migrations
 {
     [DbContext(typeof(Assignment1Context))]
-    partial class Assignment1ContextModelSnapshot : ModelSnapshot
+    [Migration("20230323094036_AddLogicSongs")]
+    partial class AddLogicSongs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,6 +78,7 @@ namespace Assignment1.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Duration")
+                        .HasMaxLength(550800)
                         .HasColumnType("int");
 
                     b.Property<int?>("GuestArtistId")
@@ -88,8 +92,8 @@ namespace Assignment1.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -169,6 +173,10 @@ namespace Assignment1.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -269,6 +277,7 @@ namespace Assignment1.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Duration")
+                        .HasMaxLength(550800)
                         .HasColumnType("int");
 
                     b.Property<int>("MediaCollectId")
@@ -276,8 +285,8 @@ namespace Assignment1.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
