@@ -47,7 +47,7 @@ namespace Assignment1.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddToPlaylist(int id)
+        public IActionResult AddToList(int id)
         {
 
             Podcast podcast = _context.Podcast.FirstOrDefault(s => s.Id == id);
@@ -66,15 +66,15 @@ namespace Assignment1.Controllers
             {
                 ViewBag.PS = _context.PlaylistSongs.Count();
 
-                PlaylistSong playlistSong = new PlaylistSong();
+                PodcastListenerLists listpod= new PodcastListenerLists();
 
-                Playlist playlist = _context.Playlists.First(p => p.Id == vm.ListenerListsId);
-                Songs song = _context.Songs.First(s => s.Id == vm.PodcastId);
+                ListenerLists list = _context.ListenerLists.First(p => p.Id == vm.ListenerListsId);
+                Podcast pod = _context.Podcast.First(s => s.Id == vm.PodcastId);
 
-                playlistSong.Playlist = playlist;
-                playlistSong.Song = song;
+                listpod.ListenerList = list;
+                listpod.Podcast = pod;
 
-                _context.PlaylistSongs.Add(playlistSong);
+                _context.PodcastListenerLists.Add(listpod);
                 _context.SaveChanges();
 
                 return RedirectToAction("Index");
